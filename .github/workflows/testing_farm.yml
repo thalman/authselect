@@ -1,0 +1,24 @@
+name: Build on test-farm
+on:
+  push:
+  pull_request:
+  issue_comment:
+  commit_comment:
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number }}
+  cancel-in-progress: true
+jobs:
+  make-check:
+    runs-on: ubuntu-latest
+    env:
+      CFLAGS: -Wall -Wextra -Werror -Wno-sign-compare -Wno-unused-parameter -ggdb3
+    steps:
+    - name: checkout
+      uses: actions/checkout@v2
+    - name: Schedule testing farm
+      uses: sclorg/testing-farm-as-github-action@v1
+      with:
+          api_key: ${{ secrets.TESTING_FARM_API_KEY }}
+          git_url: https://github.com/sclorg/sclorg-testing-farm
+          tmt_plan_regex: ".+"
+          pull_request_status_name: "CentOS 8"
