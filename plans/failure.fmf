@@ -1,0 +1,3 @@
+summary: Always failing test
+execute:
+    script: /usr/bin/false
