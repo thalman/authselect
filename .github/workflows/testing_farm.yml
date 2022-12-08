@@ -8,7 +8,7 @@ concurrency:
   group: ${{ github.workflow }}-${{ github.event.pull_request.number }}
   cancel-in-progress: true
 jobs:
-  make-check:
+  run-tests:
     runs-on: ubuntu-latest
     env:
       CFLAGS: -Wall -Wextra -Werror -Wno-sign-compare -Wno-unused-parameter -ggdb3
